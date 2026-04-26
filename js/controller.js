@@ -35,3 +35,29 @@
 
 // HINT:
 // setInterval(functionName, 1000); will call functionName() every 1000 miliseconds.
+
+import {getTime} from "./model.time.js";
+import {showDigitalTime} from "./view.digital.js";
+import {showAnalogueTime} from "./view.analagoue.js";
+
+document.addEventListener("DOMContentLoaded", function () {
+function updateTime() {
+    const TIME = getTime();
+    showDigitalTime(TIME);
+    showAnalogueTime(TIME);
+}
+function saveTime() {
+    const TIME = getTime();
+    localStorage.setItem("savedTime", TIME.hours + ":" + TIME.minutes + ":" + TIME.seconds);
+    console.log("time saved");
+}
+const BUTTON = document.getElementById("saveTimeButton");
+BUTTON.addEventListener("click", saveTime);
+const SAVED = localStorage.getItem("savedTime");
+if (SAVED) {
+    console.log("saved time:" , SAVED);
+}
+
+updateTime();
+setInterval(updateTime, 1000);
+});
